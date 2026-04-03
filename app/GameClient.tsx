@@ -1,191 +1,205 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import styles from './game.module.css'
 
 export default function GameClient() {
-  const gameRef = useRef<HTMLDivElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (!iframeRef.current) return
 
-    const script = document.createElement('script')
-    script.src = '/game.js'
-    script.async = true
-    document.body.appendChild(script)
+    const iframeDoc = iframeRef.current.contentDocument || iframeRef.current.contentWindow?.document
+    if (!iframeDoc) return
+
+    // Write the HTML structure to iframe
+    iframeDoc.open()
+    iframeDoc.write(`<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đoán Đồ Vật Qua Gợi Ý</title>
+  <style>${getStyles()}</style>
+</head>
+<body>
+<div id="laptop-shell">
+  <div id="laptop-screen">
+    <div id="laptop-inner">
+
+      <!-- ===== INTRO ===== -->
+      <div id="screen-intro" class="screen active">
+        <div class="intro-box">
+          <div class="intro-icon">🤖</div>
+          <h1>Đoán Đồ Vật Qua Gợi Ý</h1>
+          <p class="intro-desc">Chọn chế độ chơi của bạn!</p>
+          <div class="mode-grid">
+            <button class="mode-btn easy-btn" onclick="selectMode('easy')">
+              <span class="mode-icon">🟢</span>
+              <span class="mode-name">Dễ</span>
+              <span class="mode-desc">40s · Không event · AI chậm</span>
+              <span class="mode-levels">5 câu → Boss AI</span>
+            </button>
+            <button class="mode-btn medium-btn" onclick="selectMode('medium')">
+              <span class="mode-icon">🟡</span>
+              <span class="mode-name">Trung Bình</span>
+              <span class="mode-desc">30s · Random events · AI vừa</span>
+              <span class="mode-levels">5 câu → Boss AI</span>
+            </button>
+            <button class="mode-btn hard-btn" onclick="selectMode('hard')">
+              <span class="mode-icon">🔴</span>
+              <span class="mode-name">Khó</span>
+              <span class="mode-desc">20s · Nhiều event · AI siêu nhanh</span>
+              <span class="mode-levels">5 câu → Boss AI</span>
+            </button>
+            <button class="mode-btn predict-btn" onclick="selectMode('predict')">
+              <span class="mode-icon">🧠</span>
+              <span class="mode-name">Đoán Ý AI</span>
+              <span class="mode-desc">Đoán AI sẽ chọn đáp án nào</span>
+              <span class="mode-levels">5 câu · Không Boss</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== GAME ===== -->
+      <div id="screen-game" class="screen">
+        <div id="top-bar">
+          <div id="mode-badge"></div>
+          <div id="phase-badge"></div>
+          <button id="btn-quit" onclick="showScreen('screen-intro')">✕ Thoát</button>
+        </div>
+        <div id="header">
+          <div class="score-box ai-side">
+            <span class="label" id="ai-label">🤖 AI</span>
+            <span id="score-ai" class="score">0</span>
+          </div>
+          <div id="center-header">
+            <div id="timer-box">
+              <svg id="timer-svg" viewBox="0 0 60 60">
+                <circle cx="30" cy="30" r="26" class="timer-bg"/>
+                <circle cx="30" cy="30" r="26" class="timer-ring" id="timer-ring"/>
+              </svg>
+              <span id="timer-text">40</span>
+            </div>
+            <div id="round-info">Câu <span id="round-num">1</span> / <span id="round-total">5</span></div>
+          </div>
+          <div class="score-box player-side">
+            <span class="label">👤 Bạn</span>
+            <span id="score-player" class="score">0</span>
+          </div>
+        </div>
+        <div id="event-banner" class="hidden"></div>
+        <div id="game-body">
+          <div id="ai-panel" class="side-panel">
+            <div class="avatar" id="ai-avatar">🤖</div>
+            <div class="panel-label" id="ai-panel-label">AI</div>
+            <div id="ai-bubble" class="speech-bubble hidden"></div>
+            <div id="ai-thinking" class="thinking-box">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div id="ai-answer" class="answer-badge hidden"></div>
+          </div>
+          <div id="center-panel">
+            <div id="predict-mode-box" class="hidden">
+              <div class="predict-title">🧠 AI đang suy luận... Bạn đoán AI sẽ chọn gì?</div>
+              <div id="predict-choices-main"></div>
+              <div id="predict-result-msg" class="hidden"></div>
+            </div>
+            <div id="normal-mode-box">
+              <div id="hints-box">
+                <div id="hints-header">
+                  <h3>🔍 Gợi ý:</h3>
+                  <div id="hint-count-badge"></div>
+                </div>
+                <ul id="hints-list"></ul>
+              </div>
+              <div id="predict-event-box" class="hidden">
+                <div class="predict-label">🧠 Đoán xem AI sẽ chọn gì? <span class="predict-bonus">+1 điểm thưởng!</span></div>
+                <div id="predict-event-choices"></div>
+              </div>
+              <div id="choices-box">
+                <button class="choice-btn" onclick="playerChoose(0)"></button>
+                <button class="choice-btn" onclick="playerChoose(1)"></button>
+                <button class="choice-btn" onclick="playerChoose(2)"></button>
+                <button class="choice-btn" onclick="playerChoose(3)"></button>
+              </div>
+              <div id="powerup-bar">
+                <div class="pu-bar-label">⚡ Kỹ năng:</div>
+                <div id="powerup-slots"></div>
+              </div>
+            </div>
+            <div id="round-result" class="hidden"></div>
+          </div>
+          <div id="player-panel" class="side-panel">
+            <div class="avatar">👤</div>
+            <div class="panel-label">Bạn</div>
+            <div id="player-status" class="thinking-box">Đang chờ...</div>
+            <div id="player-answer" class="answer-badge hidden"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== BOSS TRANSITION ===== -->
+      <div id="screen-boss-transition" class="screen">
+        <div class="boss-transition-box">
+          <div id="bt-phase-result"></div>
+          <div class="bt-vs">🔥</div>
+          <div class="bt-title">BOSS AI XUẤT HIỆN!</div>
+          <div class="bt-desc">AI phản ứng cực nhanh · Dùng kỹ năng để cản!</div>
+          <div id="bt-score-preview"></div>
+          <div id="bt-powerups-preview" class="bt-powerups"></div>
+          <button class="btn-primary" onclick="startBossPhase()">Chiến thôi!</button>
+        </div>
+      </div>
+
+      <!-- ===== RESULT ===== -->
+      <div id="screen-result" class="screen">
+        <div class="result-box">
+          <div id="result-icon" class="result-icon"></div>
+          <h2 id="result-title"></h2>
+          <div id="result-scores" class="result-scores"></div>
+          <div id="result-history" class="result-history"></div>
+          <div class="result-actions">
+            <button onclick="showScreen('screen-intro')">🏠 Menu</button>
+            <button onclick="replayGame()">🔄 Chơi lại</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
+    `)
+    iframeDoc.close()
+
+    // Load the game script after document is ready
+    setTimeout(() => {
+      const script = iframeDoc.createElement('script')
+      script.src = '/game.js'
+      iframeDoc.body.appendChild(script)
+    }, 100)
 
     return () => {
-      if (script.parentNode) {
-        script.parentNode.removeChild(script)
+      if (iframeRef.current && iframeDoc.body.lastChild?.tagName === 'SCRIPT') {
+        iframeDoc.body.removeChild(iframeDoc.body.lastChild)
       }
     }
   }, [])
 
   return (
-    <div ref={gameRef} dangerouslySetInnerHTML={{
-      __html: `
-        <!DOCTYPE html>
-        <html lang="vi">
-        <head>
-          <meta charset="UTF-8"/>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-          <title>Đoán Đồ Vật Qua Gợi Ý</title>
-          <style>${getStyles()}</style>
-        </head>
-        <body>
-        <div id="laptop-shell">
-          <div id="laptop-screen">
-            <div id="laptop-inner">
-
-              <!-- ===== INTRO ===== -->
-              <div id="screen-intro" class="screen active">
-                <div class="intro-box">
-                  <div class="intro-icon">🤖</div>
-                  <h1>Đoán Đồ Vật Qua Gợi Ý</h1>
-                  <p class="intro-desc">Chọn chế độ chơi của bạn!</p>
-                  <div class="mode-grid">
-                    <button class="mode-btn easy-btn" onclick="selectMode('easy')">
-                      <span class="mode-icon">🟢</span>
-                      <span class="mode-name">Dễ</span>
-                      <span class="mode-desc">40s · Không event · AI chậm</span>
-                      <span class="mode-levels">5 câu → Boss AI</span>
-                    </button>
-                    <button class="mode-btn medium-btn" onclick="selectMode('medium')">
-                      <span class="mode-icon">🟡</span>
-                      <span class="mode-name">Trung Bình</span>
-                      <span class="mode-desc">30s · Random events · AI vừa</span>
-                      <span class="mode-levels">5 câu → Boss AI</span>
-                    </button>
-                    <button class="mode-btn hard-btn" onclick="selectMode('hard')">
-                      <span class="mode-icon">🔴</span>
-                      <span class="mode-name">Khó</span>
-                      <span class="mode-desc">20s · Nhiều event · AI siêu nhanh</span>
-                      <span class="mode-levels">5 câu → Boss AI</span>
-                    </button>
-                    <button class="mode-btn predict-btn" onclick="selectMode('predict')">
-                      <span class="mode-icon">🧠</span>
-                      <span class="mode-name">Đoán Ý AI</span>
-                      <span class="mode-desc">Đoán AI sẽ chọn đáp án nào</span>
-                      <span class="mode-levels">5 câu · Không Boss</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ===== GAME ===== -->
-              <div id="screen-game" class="screen">
-                <div id="top-bar">
-                  <div id="mode-badge"></div>
-                  <div id="phase-badge"></div>
-                  <button id="btn-quit" onclick="showScreen('screen-intro')">✕ Thoát</button>
-                </div>
-                <div id="header">
-                  <div class="score-box ai-side">
-                    <span class="label" id="ai-label">🤖 AI</span>
-                    <span id="score-ai" class="score">0</span>
-                  </div>
-                  <div id="center-header">
-                    <div id="timer-box">
-                      <svg id="timer-svg" viewBox="0 0 60 60">
-                        <circle cx="30" cy="30" r="26" class="timer-bg"/>
-                        <circle cx="30" cy="30" r="26" class="timer-ring" id="timer-ring"/>
-                      </svg>
-                      <span id="timer-text">40</span>
-                    </div>
-                    <div id="round-info">Câu <span id="round-num">1</span> / <span id="round-total">5</span></div>
-                  </div>
-                  <div class="score-box player-side">
-                    <span class="label">👤 Bạn</span>
-                    <span id="score-player" class="score">0</span>
-                  </div>
-                </div>
-                <div id="event-banner" class="hidden"></div>
-                <div id="game-body">
-                  <div id="ai-panel" class="side-panel">
-                    <div class="avatar" id="ai-avatar">🤖</div>
-                    <div class="panel-label" id="ai-panel-label">AI</div>
-                    <div id="ai-bubble" class="speech-bubble hidden"></div>
-                    <div id="ai-thinking" class="thinking-box">
-                      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                    </div>
-                    <div id="ai-answer" class="answer-badge hidden"></div>
-                  </div>
-                  <div id="center-panel">
-                    <div id="predict-mode-box" class="hidden">
-                      <div class="predict-title">🧠 AI đang suy luận... Bạn đoán AI sẽ chọn gì?</div>
-                      <div id="predict-choices-main"></div>
-                      <div id="predict-result-msg" class="hidden"></div>
-                    </div>
-                    <div id="normal-mode-box">
-                      <div id="hints-box">
-                        <div id="hints-header">
-                          <h3>🔍 Gợi ý:</h3>
-                          <div id="hint-count-badge"></div>
-                        </div>
-                        <ul id="hints-list"></ul>
-                      </div>
-                      <div id="predict-event-box" class="hidden">
-                        <div class="predict-label">🧠 Đoán xem AI sẽ chọn gì? <span class="predict-bonus">+1 điểm thưởng!</span></div>
-                        <div id="predict-event-choices"></div>
-                      </div>
-                      <div id="choices-box">
-                        <button class="choice-btn" onclick="playerChoose(0)"></button>
-                        <button class="choice-btn" onclick="playerChoose(1)"></button>
-                        <button class="choice-btn" onclick="playerChoose(2)"></button>
-                        <button class="choice-btn" onclick="playerChoose(3)"></button>
-                      </div>
-                      <div id="powerup-bar">
-                        <div class="pu-bar-label">⚡ Kỹ năng:</div>
-                        <div id="powerup-slots"></div>
-                      </div>
-                    </div>
-                    <div id="round-result" class="hidden"></div>
-                  </div>
-                  <div id="player-panel" class="side-panel">
-                    <div class="avatar">👤</div>
-                    <div class="panel-label">Bạn</div>
-                    <div id="player-status" class="thinking-box">Đang chờ...</div>
-                    <div id="player-answer" class="answer-badge hidden"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ===== BOSS TRANSITION ===== -->
-              <div id="screen-boss-transition" class="screen">
-                <div class="boss-transition-box">
-                  <div id="bt-phase-result"></div>
-                  <div class="bt-vs">🔥</div>
-                  <div class="bt-title">BOSS AI XUẤT HIỆN!</div>
-                  <div class="bt-desc">AI phản ứng cực nhanh · Dùng kỹ năng để cản!</div>
-                  <div id="bt-score-preview"></div>
-                  <div id="bt-powerups-preview" class="bt-powerups"></div>
-                  <button class="btn-primary" onclick="startBossPhase()">Chiến thôi!</button>
-                </div>
-              </div>
-
-              <!-- ===== RESULT ===== -->
-              <div id="screen-result" class="screen">
-                <div class="result-box">
-                  <div id="result-icon" class="result-icon"></div>
-                  <h2 id="result-title"></h2>
-                  <div id="result-scores" class="result-scores"></div>
-                  <div id="result-history" class="result-history"></div>
-                  <div class="result-actions">
-                    <button onclick="showScreen('screen-intro')">🏠 Menu</button>
-                    <button onclick="replayGame()">🔄 Chơi lại</button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <script src="/game.js"><\/script>
-        </body>
-        </html>
-      `
-    }} />
+    <iframe
+      ref={iframeRef}
+      style={{
+        width: '100%',
+        height: '100vh',
+        border: 'none',
+        background: '#0f0f0f'
+      }}
+      title="Game Doan Do Vat"
+      sandbox="allow-same-origin allow-scripts"
+    />
   )
 }
 
@@ -801,6 +815,65 @@ html, body {
   transform: translateY(-2px);
 }
 
+#predict-mode-box {
+  background: rgba(40, 40, 40, 0.5);
+  border: 1px solid rgba(100, 100, 100, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+}
+
+.predict-title {
+  font-size: 1em;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+#predict-choices-main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.predict-choice-btn {
+  padding: 12px;
+  background: linear-gradient(135deg, #3a4a6a 0%, #2a3a4a 100%);
+  border: 1px solid rgba(170, 0, 255, 0.3);
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9em;
+}
+
+.predict-choice-btn:hover {
+  border-color: rgba(170, 0, 255, 0.7);
+  background: linear-gradient(135deg, #4a5a7a 0%, #3a4a5a 100%);
+}
+
+#predict-event-choices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.predict-event-choice {
+  padding: 10px;
+  background: rgba(170, 0, 255, 0.1);
+  border: 1px solid rgba(170, 0, 255, 0.3);
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.85em;
+  text-align: center;
+}
+
+.predict-event-choice:hover {
+  background: rgba(170, 0, 255, 0.2);
+  border-color: rgba(170, 0, 255, 0.6);
+}
+
 @keyframes slideInUp {
   from {
     opacity: 0;
@@ -853,32 +926,6 @@ html, body {
 
   .mode-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .mode-btn {
-    padding: 15px 10px;
-  }
-
-  #header {
-    flex-wrap: wrap;
-  }
-
-  .score-box {
-    flex: 0 0 45%;
-  }
-
-  #center-header {
-    flex: 0 0 100%;
-  }
-
-  #game-body {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .side-panel {
-    flex: 0 0 80px;
   }
 
   #choices-box {
