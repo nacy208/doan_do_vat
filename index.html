@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Đoán Đồ Vật Qua Gợi Ý</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css?v=5"/>
 </head>
 <body>
 
@@ -16,29 +16,22 @@
       <!-- ===== INTRO ===== -->
       <div id="screen-intro" class="screen active">
         <div class="intro-box">
-          <div class="intro-icon">🤖</div>
-          <h1>Đoán Đồ Vật Qua Gợi Ý</h1>
+          <h1>NHÀ DỰ ĐOÁN THÔNG THÁI</h1>
           <p class="intro-desc">Chọn chế độ chơi của bạn!</p>
           <div class="mode-grid">
             <button class="mode-btn easy-btn" onclick="selectMode('easy')">
-              <span class="mode-icon">🟢</span>
+              <img src="cap_độ_robot/dễ.jpg" class="mode-robot-img" alt="Dễ"/>
               <span class="mode-name">Dễ</span>
-              <span class="mode-desc">40s · Không event · AI chậm</span>
-              <span class="mode-levels">5 câu → Boss AI</span>
             </button>
             <button class="mode-btn medium-btn" onclick="selectMode('medium')">
-              <span class="mode-icon">🟡</span>
+              <img src="cap_độ_robot/trung bình.jpg" class="mode-robot-img" alt="Trung Bình"/>
               <span class="mode-name">Trung Bình</span>
-              <span class="mode-desc">30s · Random events · AI vừa</span>
-              <span class="mode-levels">5 câu → Boss AI</span>
             </button>
             <button class="mode-btn hard-btn" onclick="selectMode('hard')">
-              <span class="mode-icon">🔴</span>
+              <img src="cap_độ_robot/khó.jpg" class="mode-robot-img" alt="Khó"/>
               <span class="mode-name">Khó</span>
-              <span class="mode-desc">20s · Nhiều event · AI siêu nhanh</span>
-              <span class="mode-levels">5 câu → Boss AI</span>
             </button>
-            <button class="mode-btn predict-btn" onclick="selectMode('predict')">
+            <button class="mode-btn predict-btn" onclick="selectMode('predict')" style="display:none">
               <span class="mode-icon">🧠</span>
               <span class="mode-name">Đoán Ý AI</span>
               <span class="mode-desc">Đoán AI sẽ chọn đáp án nào</span>
@@ -52,15 +45,13 @@
       <div id="screen-game" class="screen">
         <div id="top-bar">
           <div id="mode-badge"></div>
-          <div id="phase-badge"></div>
-          <button id="btn-quit" onclick="showScreen('screen-intro')">✕ Thoát</button>
-        </div>
-        <div id="header">
-          <div class="score-box ai-side">
-            <span class="label" id="ai-label">🤖 AI</span>
-            <span id="score-ai" class="score">0</span>
-          </div>
-          <div id="center-header">
+          <!-- Header nằm giữa top-bar -->
+          <div id="header">
+            <div class="score-box ai-side">
+              <span class="label" id="ai-label">🤖 AI</span>
+              <span id="score-ai" class="score">0</span>
+            </div>
+            <div id="round-info">Câu <span id="round-num">1</span> / <span id="round-total">5</span></div>
             <div id="timer-box">
               <svg id="timer-svg" viewBox="0 0 60 60">
                 <circle cx="30" cy="30" r="26" class="timer-bg"/>
@@ -68,17 +59,18 @@
               </svg>
               <span id="timer-text">40</span>
             </div>
-            <div id="round-info">Câu <span id="round-num">1</span> / <span id="round-total">5</span></div>
+            <div class="score-box player-side">
+              <span class="label">👤 Bạn</span>
+              <span id="score-player" class="score">0</span>
+            </div>
           </div>
-          <div class="score-box player-side">
-            <span class="label">👤 Bạn</span>
-            <span id="score-player" class="score">0</span>
-          </div>
+          <div id="phase-badge" style="display:none"></div>
+          <button id="btn-quit" onclick="showScreen('screen-intro')">✕ Thoát</button>
         </div>
-        <div id="event-banner" class="hidden"></div>
+        <div id="event-banner" class="hidden" style="display:none!important"></div>
         <div id="game-body">
           <div id="ai-panel" class="side-panel">
-            <div class="avatar" id="ai-avatar">🤖</div>
+            <div class="avatar" id="ai-avatar"><img src="cam_xuc_robot/đang suy nghĩ.png" alt="AI" id="ai-emotion-img"/></div>
             <div class="panel-label" id="ai-panel-label">AI</div>
             <div id="ai-bubble" class="speech-bubble hidden"></div>
             <div id="ai-thinking" class="thinking-box">
@@ -98,7 +90,18 @@
                   <h3>🔍 Gợi ý:</h3>
                   <div id="hint-count-badge"></div>
                 </div>
-                <ul id="hints-list"></ul>
+                <!-- CAROUSEL -->
+                <div id="hint-carousel">
+                  <button id="hint-prev" onclick="hintNav(-1)">◀</button>
+                  <div id="hint-display">
+                    <div id="hint-text"></div>
+                  </div>
+                  <button id="hint-next" onclick="hintNav(1)">▶</button>
+                </div>
+                <!-- dots -->
+                <div id="hint-dots"></div>
+                <!-- list ẩn vẫn giữ để tương thích code cũ -->
+                <ul id="hints-list" style="display:none"></ul>
               </div>
               <div id="predict-event-box" class="hidden">
                 <div class="predict-label">🧠 Đoán xem AI sẽ chọn gì? <span class="predict-bonus">+1 điểm thưởng!</span></div>
@@ -110,7 +113,7 @@
                 <button class="choice-btn" onclick="playerChoose(2)"></button>
                 <button class="choice-btn" onclick="playerChoose(3)"></button>
               </div>
-              <div id="powerup-bar">
+              <div id="powerup-bar" style="display:none">
                 <div class="pu-bar-label">⚡ Kỹ năng:</div>
                 <div id="powerup-slots"></div>
               </div>
@@ -118,7 +121,7 @@
             <div id="round-result" class="hidden"></div>
           </div>
           <div id="player-panel" class="side-panel">
-            <div class="avatar">👤</div>
+            <div class="avatar" id="player-avatar">👤</div>
             <div class="panel-label">Bạn</div>
             <div id="player-status" class="thinking-box">Đang chờ...</div>
             <div id="player-answer" class="answer-badge hidden"></div>
@@ -126,7 +129,40 @@
         </div>
       </div>
 
-      <!-- ===== BOSS TRANSITION ===== -->
+      <!-- ===== CHỌN GIỚI TÍNH ===== -->
+      <div id="screen-gender" class="screen">
+        <div class="gender-box">
+          <div class="gender-title">Bạn là ai?</div>
+          <div class="gender-grid">
+            <button class="gender-btn" onclick="selectGender('nam')">
+              <img src="gioi_tinh_player/nam.jpg" alt="Nam" class="gender-img"/>
+              <span class="gender-label"> Nam</span>
+            </button>
+            <button class="gender-btn" onclick="selectGender('nữ')">
+              <img src="gioi_tinh_player/nữ.jpg" alt="Nữ" class="gender-img"/>
+              <span class="gender-label"> Nữ</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- ===== COUNTDOWN ===== -->
+      <div id="screen-countdown" class="screen">
+        <div id="countdown-bg">
+          <div id="cd-left">
+            <img id="cd-ai-img" src="cam_xuc_robot/có nguy hiểm.png" alt="AI"/>
+            <div class="cd-name">AI</div>
+          </div>
+          <div id="cd-center">
+            <div id="cd-number">3</div>
+            <div id="cd-ready">Sẵn sàng chưa?</div>
+          </div>
+          <div id="cd-right">
+            <img id="cd-player-img" src="gioi_tinh_player/nam.jpg" alt="Bạn"/>
+            <div class="cd-name">Bạn</div>
+          </div>
+        </div>
+      </div>
+
       <div id="screen-boss-transition" class="screen">
         <div class="boss-transition-box">
           <div id="bt-phase-result"></div>
@@ -147,14 +183,17 @@
           <div id="result-scores" class="result-scores"></div>
           <div id="result-history" class="result-history"></div>
           <div class="result-actions">
-            <button onclick="showScreen('screen-intro')">🏠 Menu</button>
-            <button onclick="replayGame()">🔄 Chơi lại</button>
+            <button onclick="showScreen('screen-intro')">Menu</button>
+            <button onclick="replayGame()">Chơi lại</button>
           </div>
         </div>
       </div>
 
     </div><!-- /laptop-inner -->
   </div><!-- /laptop-screen -->
+
+  <!-- LOGO góc phải dưới -->
+  <img id="game-logo" src="logo.png" alt="Logo"/>
 
 </div><!-- /laptop-shell -->
 

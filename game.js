@@ -32,16 +32,16 @@ var OBJECTS = [
     choices:["Máy tính bảng","Tivi","Màn hình máy tính","Máy chiếu"] },
   { name:"Đồng hồ đeo tay",
     features:{dungDienNang:false,coManHinh:true,coBanPhim:false,coTheGapLai:false,diDong:true,coPin:true,coLoa:false,coCamera:false,dungDeHoc:false,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"tròn",chatLieu:"kim loại",coVach:false},
-    hints:["Rất nhỏ, nhẹ, mang theo người","Chạy bằng pin nhỏ xíu","Hình tròn, làm bằng kim loại hoặc nhựa","Giúp biết mấy giờ mà không cần điện thoại","Đeo vào cổ tay mỗi sáng trước khi đi học"],
+    hints:["Rất nhỏ, nhẹ, mang theo người","Chạy bằng pin nhỏ xíu","Thường hình tròn, làm bằng kim loại hoặc nhựa","Giúp biết mấy giờ mà không cần điện thoại","Đeo vào cổ tay mỗi sáng trước khi đi học"],
     choices:["Vòng tay","Đồng hồ đeo tay","Điện thoại","Đồng hồ báo thức"] },
   { name:"Sách",
     features:{dungDienNang:false,coManHinh:false,coBanPhim:false,coTheGapLai:true,diDong:true,coPin:false,coLoa:false,coCamera:false,dungDeHoc:true,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"chữ nhật",chatLieu:"giấy",coVach:false},
     hints:["Nhẹ, mang đi được, không cần điện","Làm từ giấy, có thể lật từng trang","Hình chữ nhật, có bìa cứng bên ngoài","Dùng để đọc và học bài","Tìm thấy ở thư viện trường học"],
-    choices:["Vở","Sách","Tạp chí","Truyện tranh"] },
+    choices:["Gương","Sách","Thước kẻ","bảng đen"] },
   { name:"Cái bàn",
     features:{dungDienNang:false,coManHinh:false,coBanPhim:false,coTheGapLai:false,diDong:false,coPin:false,coLoa:false,coCamera:false,dungDeHoc:true,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"chữ nhật",chatLieu:"gỗ/nhựa",coVach:false},
-    hints:["Làm bằng gỗ hoặc nhựa cứng, không cần điện","Không di chuyển được, đặt cố định","Có 4 chân đứng vững trên sàn nhà","Có mặt phẳng rộng để đặt đồ vật lên trên","Học sinh ngồi vào đây để học bài mỗi ngày"],
-    choices:["Cái ghế","Cái bàn","Kệ sách","Tủ đựng đồ"] },
+    hints:["Làm bằng gỗ hoặc nhựa cứng, không cần điện","Được đặt cố định","Có 4 chân đứng vững trên sàn nhà","Có mặt phẳng rộng để đặt đồ vật lên trên","Học sinh ngồi vào đây để học bài mỗi ngày"],
+    choices:["Cái cửa","Cái bàn","Kệ sách","Tủ đựng đồ"] },
   { name:"Xe đạp",
     features:{dungDienNang:false,coManHinh:false,coBanPhim:false,coTheGapLai:false,diDong:true,coPin:false,coLoa:false,coCamera:false,dungDeHoc:false,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"phức tạp",chatLieu:"kim loại",coVach:false},
     hints:["Làm bằng kim loại, không cần điện hay xăng","Di chuyển được, dùng sức người","Có tay lái để rẽ trái rẽ phải","Có hai bánh xe to tròn","Đạp chân vào bàn đạp để chạy, nhiều bạn nhỏ đi học bằng thứ này"],
@@ -49,7 +49,7 @@ var OBJECTS = [
   { name:"Bóng đèn",
     features:{dungDienNang:true,coManHinh:false,coBanPhim:false,coTheGapLai:false,diDong:false,coPin:false,coLoa:false,coCamera:false,dungDeHoc:false,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"tròn",chatLieu:"điện tử",coVach:false},
     hints:["Cần điện để hoạt động, không mang đi được","Hình tròn nhỏ, làm bằng thủy tinh","Gắn cố định trên trần nhà","Khi hỏng thì cả phòng bị tối","Phát sáng giúp học bài vào buổi tối"],
-    choices:["Đèn pin","Bóng đèn","Nến","Đèn bàn"] },
+    choices:["Đèn pin","Bóng đèn","Nến","Đom đóm"] },
   { name:"Bàn phím máy tính",
     features:{dungDienNang:true,coManHinh:false,coBanPhim:true,coTheGapLai:false,diDong:true,coPin:false,coLoa:false,coCamera:false,dungDeHoc:true,coNhieu:true,coNuoc:false,coLua:false,hinhDang:"chữ nhật",chatLieu:"điện tử",coVach:false},
     hints:["Hình chữ nhật dẹt, không có màn hình riêng","Nối với máy tính bằng dây hoặc không dây","Đặt trước màn hình khi dùng máy tính","Có rất nhiều phím bấm xếp thành hàng","Bấm vào để gõ chữ và số hiện lên màn hình"],
@@ -73,11 +73,11 @@ var OBJECTS = [
   { name:"Thước kẻ",
     features:{dungDienNang:false,coManHinh:false,coBanPhim:false,coTheGapLai:false,diDong:true,coPin:false,coLoa:false,coCamera:false,dungDeHoc:true,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"dài",chatLieu:"gỗ/nhựa",coVach:true},
     hints:["Nhỏ gọn, để trong hộp bút, không cần điện","Dài và dẹt, làm bằng nhựa trong suốt","Có các vạch chia 1cm, 2cm... in rõ ràng","Dùng để kẻ đường thẳng khi vẽ hình","Dùng để đo chiều dài của đồ vật"],
-    choices:["Cây bút","Thước kẻ","Ê-ke","Compa"] },
+    choices:["Cây bút","Thước kẻ","Cục tẩy","Compa"] },
   { name:"Cái ghế",
     features:{dungDienNang:false,coManHinh:false,coBanPhim:false,coTheGapLai:false,diDong:false,coPin:false,coLoa:false,coCamera:false,dungDeHoc:false,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"phức tạp",chatLieu:"gỗ/nhựa",coVach:false},
-    hints:["Làm bằng gỗ hoặc nhựa, không cần điện","Không di chuyển, đặt cố định trong phòng","Có 4 chân chắc chắn","Thường đặt trước bàn học","Có chỗ để ngồi và tựa lưng"],
-    choices:["Cái bàn","Cái ghế","Sofa","Giường"] },
+    hints:["Làm bằng gỗ hoặc nhựa, không cần điện","Không  được đặt cố định trong phòng","Có 4 chân chắc chắn","Thường đặt trước bàn học","Có chỗ để ngồi và tựa lưng"],
+    choices:["Cái bàn","Cái ghế","Tủ sách","Kệ đựng đồ"] },
   { name:"Đèn pin",
     features:{dungDienNang:true,coManHinh:false,coBanPhim:false,coTheGapLai:false,diDong:true,coPin:true,coLoa:false,coCamera:false,dungDeHoc:false,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"dài",chatLieu:"kim loại",coVach:false},
     hints:["Nhỏ gọn, cầm tay mang đi được","Chạy bằng pin, không cần cắm điện","Hình trụ dài như ống, có nút bật tắt","Chiếu sáng về một hướng phía trước","Dùng khi đi trong bóng tối hoặc mất điện"],
@@ -85,15 +85,15 @@ var OBJECTS = [
   { name:"Cái mũ",
     features:{dungDienNang:false,coManHinh:false,coBanPhim:false,coTheGapLai:true,diDong:true,coPin:false,coLoa:false,coCamera:false,dungDeHoc:false,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"tròn",chatLieu:"vải",coVach:false},
     hints:["Nhẹ, gấp lại được, bỏ vào túi","Làm bằng vải hoặc nhựa mềm","Có nhiều màu sắc và kiểu dáng đẹp","Che nắng và mưa","Đội lên đầu khi ra ngoài trời"],
-    choices:["Khăn quàng cổ","Cái mũ","Kính mắt","Ô che mưa"] },
+    choices:["Khăn quàng cổ","Cái mũ","Kính mắt","Vòng tay"] },
   { name:"Máy ảnh",
     features:{dungDienNang:true,coManHinh:true,coBanPhim:false,coTheGapLai:false,diDong:true,coPin:true,coLoa:false,coCamera:true,dungDeHoc:false,coNhieu:false,coNuoc:false,coLua:false,hinhDang:"chữ nhật",chatLieu:"điện tử",coVach:false},
     hints:["Thiết bị điện tử dùng pin, mang đi được","Có màn hình nhỏ phía sau để xem lại","Đeo dây quàng qua cổ khi dùng","Có ống kính tròn nhô ra phía trước","Bấm nút để chụp ảnh lưu lại kỷ niệm"],
-    choices:["Điện thoại","Máy ảnh","Ống nhòm","Kính lúp"] },
+    choices:["Cái bàn","Máy ảnh","Ống nhòm","Kính lúp"] },
   { name:"Lò vi sóng",
     features:{dungDienNang:true,coManHinh:false,coBanPhim:false,coTheGapLai:false,diDong:false,coPin:false,coLoa:false,coCamera:false,dungDeHoc:false,coNhieu:false,coNuoc:false,coLua:true,hinhDang:"chữ nhật",chatLieu:"kim loại",coVach:false},
     hints:["Đặt trên bàn bếp, cắm điện để dùng","Hình hộp chữ nhật, làm bằng kim loại","Cửa có kính để nhìn thức ăn bên trong","Bấm nút đặt thời gian rồi chờ tiếng bíp","Hâm nóng cơm nguội chỉ trong 1-2 phút"],
-    choices:["Nồi cơm điện","Lò vi sóng","Lò nướng","Bếp điện"] }
+    choices:["Nồi cơm điện","Lò vi sóng","Tủ lạnh","Bếp điện"] }
 ];
 
 // ============================================================
@@ -149,6 +149,33 @@ function runDecisionTree(features) {
 // ============================================================
 // AI DIALOGUES
 // ============================================================
+// ============================================================
+// AI EMOTION - đổi ảnh avatar theo tình huống
+// ============================================================
+var AI_EMOTIONS = {
+  thinking:  'cam_xuc_robot/đang suy nghĩ.png',
+  correct:   'cam_xuc_robot/vui vẻ 01.png',
+  happy:     'cam_xuc_robot/hạnh phúc.png',
+  wrong:     'cam_xuc_robot/buồn.png',
+  angry:     'cam_xuc_robot/tức giận.png',
+  blocked:   'cam_xuc_robot/gặp sự cố.png',
+  confused:  'cam_xuc_robot/thắc mắc.png',
+  tired:     'cam_xuc_robot/mệt.png',
+  love:      'cam_xuc_robot/yêu.png',
+  danger:    'cam_xuc_robot/có nguy hiểm.png',
+  hard:      'cam_xuc_robot/gặp khó khăn.png'
+};
+
+function setAIEmotion(type) {
+  var img = document.getElementById('ai-emotion-img');
+  if (!img) return;
+  var src = AI_EMOTIONS[type] || AI_EMOTIONS.thinking;
+  img.style.opacity = '0';
+  setTimeout(function(){
+    img.src = src;
+    img.style.opacity = '1';
+  }, 150);
+}
 var AI_DIALOGUES = {
   thinking:["Hmm… cái này chắc là… 🤔","Để AI suy nghĩ đã…","Dữ kiện này quen quen…","Phân tích gợi ý…"],
   correct: ["Ha! Dễ quá rồi 😎","AI không bao giờ sai! 🤖","Cây quyết định nói đúng rồi!","Tính toán hoàn hảo ✅"],
@@ -199,12 +226,39 @@ function getDialogue(type) {
 }
 var _bubbleTimer = null;
 function showAIBubble(text, dur) {
-  dur = dur || 2500;
+  dur = dur || 2000;
   var b = document.getElementById('ai-bubble');
+  if (!b) return;
   b.textContent = text;
+  b.style.opacity = '1';
+  b.style.transition = '';
+  b.style.position = 'fixed';
+  b.style.zIndex = '9999';
+
+  // Đặt bubble ngay trên avatar AI - như AI đang nói
+  var aiPanel = document.getElementById('ai-panel');
+  if (aiPanel) {
+    var rp = aiPanel.getBoundingClientRect();
+    b.style.left = (rp.left + rp.width / 2) + 'px';
+    b.style.top = (rp.top + 9) + 'px';
+    b.style.transform = 'translate(-50%, -100%)';
+  } else {
+    b.style.left = '80px';
+    b.style.top = '60px';
+    b.style.transform = 'translate(-50%, 0)';
+  }
   b.classList.remove('hidden');
+
   clearTimeout(_bubbleTimer);
-  _bubbleTimer = setTimeout(function(){ b.classList.add('hidden'); }, dur);
+  _bubbleTimer = setTimeout(function(){
+    b.style.transition = 'opacity 0.5s ease';
+    b.style.opacity = '0';
+    setTimeout(function(){
+      b.classList.add('hidden');
+      b.style.opacity = '1';
+      b.style.transition = '';
+    }, 500);
+  }, Math.max(dur - 500, 800));
 }
 
 // ============================================================
@@ -313,8 +367,54 @@ function showScreen(id) {
 function selectMode(mode) {
   initState(mode);
   _updateModeUI();
-  showScreen('screen-game');
-  nextRound();
+  // Reset điểm hiển thị về 0
+  document.getElementById('score-ai').textContent = '0';
+  document.getElementById('score-player').textContent = '0';
+  // Vào màn hình chọn giới tính trước
+  showScreen('screen-gender');
+}
+
+function selectGender(gender) {
+  state.playerGender = gender;
+  var avatarEl = document.getElementById('player-avatar');
+  avatarEl.innerHTML = '<img src="gioi_tinh_player/' + gender + '.jpg" alt="' + gender + '"/>';
+
+  // Cập nhật ảnh player trong countdown
+  var cdPlayer = document.getElementById('cd-player-img');
+  if (cdPlayer) cdPlayer.src = 'gioi_tinh_player/' + gender + '.jpg';
+
+  showScreen('screen-countdown');
+  document.body.classList.add('on-countdown');
+  startCountdown();
+}
+
+function startCountdown() {
+  var num = 3;
+  var numEl = document.getElementById('cd-number');
+  var readyEl = document.getElementById('cd-ready');
+
+  function tick() {
+    if (num > 0) {
+      numEl.textContent = num;
+      numEl.style.animation = 'none';
+      void numEl.offsetWidth;
+      numEl.style.animation = 'cdPulse .8s ease-in-out';
+      num--;
+      setTimeout(tick, 1000);
+    } else {
+      numEl.textContent = '🚀';
+      readyEl.textContent = 'BẮT ĐẦU!';
+      numEl.style.animation = 'none';
+      void numEl.offsetWidth;
+      numEl.style.animation = 'cdPulse .6s ease-in-out';
+      setTimeout(function(){
+        showScreen('screen-game');
+        document.body.classList.remove('on-countdown');
+        nextRound();
+      }, 700);
+    }
+  }
+  tick();
 }
 
 function replayGame() { selectMode(state.mode); }
@@ -329,7 +429,7 @@ function _updateModeUI() {
 function _updatePhaseUI() {
   var pb = document.getElementById('phase-badge');
   var isBoss = state.phase === 'boss';
-  pb.textContent = isBoss ? '🔥 BOSS' : '📝 Vòng thường';
+  pb.textContent = isBoss ? '🔥 BOSS' : ' Vòng thường';
   pb.className = isBoss ? 'phase-boss' : 'phase-normal';
   document.getElementById('ai-label').textContent = isBoss ? '😈 Boss AI' : '🤖 AI';
   document.getElementById('ai-panel-label').textContent = isBoss ? 'Boss AI' : 'AI';
@@ -388,21 +488,8 @@ function startBossPhase() {
 function nextRound() {
   var maxRounds = state.phase === 'boss' ? state.bossRounds : state.normalRounds;
 
-  // Predict mode không có boss phase
-  if (state.mode === 'predict' && state.round >= state.normalRounds) {
-    showResult(); return;
-  }
-  // Custom mode: 1 lượt rồi kết thúc
-  if (state.mode === 'custom' && state.round >= 1) {
-    showResult(); return;
-  }
-  // Normal phase xong → boss transition (trừ predict/custom)
-  if (state.phase === 'normal' && state.round >= state.normalRounds &&
-      state.mode !== 'predict' && state.mode !== 'custom') {
-    showBossTransition(); return;
-  }
-  // Boss phase xong → result
-  if (state.phase === 'boss' && state.round >= state.bossRounds) {
+  // Tất cả chế độ: sau normalRounds thì kết thúc (Boss phase tạm ẩn)
+  if (state.round >= state.normalRounds) {
     showResult(); return;
   }
 
@@ -420,7 +507,7 @@ function nextRound() {
     state.question = OBJECTS[idx];
   }
 
-  state.event = (state.phase === 'boss') ? {id:"none",label:"",desc:"",cls:""} : pickEvent(state.cfg);
+  state.event = {id:"none",label:"",desc:"",cls:""}; // events tạm ẩn
   state.playerAnswered = false;
   state.aiAnswered = false;
   state.aiBlocked = false;
@@ -449,18 +536,17 @@ function nextRound() {
 
   // AI delay
   var cfg = state.cfg;
-  var delay;
-  if (state.phase === 'boss') {
-    // Boss chờ đúng 3 gợi ý (9s) + 0.5-1.5s suy nghĩ → tạo cảm giác nhanh nhưng có logic
-    var hintsBeforeGuess = 3;
-    var hintInterval = 3000;
-    var thinkExtra = 500 + Math.random() * 1000;
-    delay = hintsBeforeGuess * hintInterval + thinkExtra;
-  } else {
-    var delayRange = cfg.aiDelay;
-    delay = delayRange[0] + Math.random() * (delayRange[1] - delayRange[0]);
+  var delayRange = cfg.aiDelay;
+  var delay = delayRange[0] + Math.random() * (delayRange[1] - delayRange[0]);
+  if (!state.aiBlocked) {
+    // Hiện bubble "đang suy nghĩ" sau 2s
+    setTimeout(function(){
+      if (state.roundActive && !state.aiAnswered) {
+        showAIBubble(getDialogue('thinking'), delay - 1500);
+      }
+    }, 2000);
+    setTimeout(aiMakeDecision, delay);
   }
-  if (!state.aiBlocked) setTimeout(aiMakeDecision, delay);
 
   startTimer();
 }
@@ -483,8 +569,21 @@ function resetRoundUI() {
   state.shieldActive = false;
   renderPowerupBar();
   _clearHintTimers();
+  // Reset carousel
+  _carouselState = { hints:[], current:0, revealed:0 };
+  var textEl = document.getElementById('hint-text');
+  if (textEl) { textEl.textContent = ''; }
+  var dotsEl = document.getElementById('hint-dots');
+  if (dotsEl) dotsEl.innerHTML = '';
+  document.getElementById('hint-count-badge').textContent = '';
 
-  document.getElementById('ai-thinking').style.display = 'flex';  document.getElementById('ai-bubble').classList.add('hidden');
+  clearTimeout(_bubbleTimer);
+  var b = document.getElementById('ai-bubble');
+  b.classList.add('hidden');
+  b.style.opacity = '1';
+  b.style.transition = '';
+  document.getElementById('ai-thinking').style.display = 'flex';
+  setAIEmotion('thinking'); // đang suy nghĩ khi bắt đầu lượt mới
   var aiAns = document.getElementById('ai-answer');
   aiAns.className = 'answer-badge hidden'; aiAns.textContent = '';
 
@@ -517,44 +616,110 @@ function renderQuestion() {
 }
 
 var _hintTimers = [];
+var _carouselState = { hints:[], current:0, revealed:0 };
+
 function _clearHintTimers() {
   _hintTimers.forEach(function(t){ clearTimeout(t); });
   _hintTimers = [];
 }
 
-function _showHintsSequentially(hints, startIdx) {
+function _showHintsSequentially(hints) {
   _clearHintTimers();
-  var ul = document.getElementById('hints-list');
-  ul.innerHTML = '';
-  var HINT_INTERVAL = 3000; // 3 giây mỗi gợi ý
+  _carouselState = { hints: hints, current: 0, revealed: 0 };
+  _renderCarousel();
+
+  var roundSnapshot = state.round;
+  var HINT_INTERVAL = 3000;
 
   hints.forEach(function(h, i) {
     var t = setTimeout(function(){
-      if (!state.roundActive && i > 0) return; // dừng nếu lượt kết thúc
-      var li = document.createElement('li');
-      li.textContent = '• ' + h;
-      if (h.indexOf('⚠️') !== -1) li.classList.add('noise-hint');
-      if (h.indexOf('✨') !== -1) li.classList.add('vip-hint');
-      li.style.animation = 'slideIn .4s forwards';
-      ul.appendChild(li);
-      document.getElementById('hint-count-badge').textContent = (i+1) + ' / ' + hints.length;
+      if (state.round !== roundSnapshot) return;
+      if (i > _carouselState.revealed) {
+        _carouselState.revealed = i;
+      }
+      // Auto chuyển sang hint mới nhất
+      _carouselState.current = i;
+      _renderCarousel();
+      // Cập nhật badge
+      document.getElementById('hint-count-badge').textContent =
+        (i + 1) + ' / ' + hints.length;
     }, i * HINT_INTERVAL);
     _hintTimers.push(t);
   });
 }
 
+function _renderCarousel() {
+  var cs = _carouselState;
+  var hints = cs.hints;
+  var cur = cs.current;
+  var rev = cs.revealed;
+
+  // Hiện hint text
+  var textEl = document.getElementById('hint-text');
+  if (textEl) {
+    if (cur <= rev) {
+      textEl.textContent = '• ' + hints[cur];
+      textEl.className = '';
+      // Màu đặc biệt
+      if (hints[cur].indexOf('⚠️') !== -1) textEl.style.color = '#c0392b';
+      else if (hints[cur].indexOf('✨') !== -1) textEl.style.color = '#1e8449';
+      else textEl.style.color = '#3d2b1f';
+    } else {
+      textEl.textContent = '🔒 Chưa mở khóa...';
+      textEl.className = 'locked';
+      textEl.style.color = '';
+    }
+    // Trigger animation
+    textEl.style.animation = 'none';
+    void textEl.offsetWidth;
+    textEl.style.animation = 'hintFade .35s ease';
+  }
+
+  // Dots
+  var dotsEl = document.getElementById('hint-dots');
+  if (dotsEl) {
+    dotsEl.innerHTML = '';
+    hints.forEach(function(h, i) {
+      var d = document.createElement('button');
+      d.className = 'hint-dot' +
+        (i === cur ? ' active' : '') +
+        (i <= rev ? ' revealed' : ' locked');
+      d.title = i <= rev ? 'Gợi ý ' + (i+1) : 'Chưa mở';
+      if (i <= rev) {
+        d.onclick = (function(idx){ return function(){ hintGoTo(idx); }; })(i);
+      } else {
+        d.disabled = true;
+      }
+      dotsEl.appendChild(d);
+    });
+  }
+
+  // Nút prev/next
+  var prev = document.getElementById('hint-prev');
+  var next = document.getElementById('hint-next');
+  if (prev) prev.disabled = (cur <= 0);
+  if (next) next.disabled = (cur >= rev);
+}
+
+function hintNav(dir) {
+  var cs = _carouselState;
+  var newIdx = cs.current + dir;
+  if (newIdx < 0 || newIdx > cs.revealed) return;
+  cs.current = newIdx;
+  _renderCarousel();
+}
+
+function hintGoTo(idx) {
+  if (idx > _carouselState.revealed) return;
+  _carouselState.current = idx;
+  _renderCarousel();
+}
+
 function _renderHints(hints) {
-  // Dùng khi cần hiện ngay (event noise/hint VIP) - hủy timer cũ
+  // Khi cần hiện ngay (powerup hint) - hiện tất cả và chuyển đến cuối
   _clearHintTimers();
-  var ul = document.getElementById('hints-list');
-  ul.innerHTML = '';
-  hints.forEach(function(h){
-    var li = document.createElement('li');
-    li.textContent = '• ' + h;
-    if (h.indexOf('⚠️') !== -1) li.classList.add('noise-hint');
-    if (h.indexOf('✨') !== -1) li.classList.add('vip-hint');
-    ul.appendChild(li);
-  });
+  _carouselState = { hints: hints, current: hints.length - 1, revealed: hints.length - 1 };
+  _renderCarousel();
   document.getElementById('hint-count-badge').textContent = hints.length + ' / ' + hints.length;
 }
 
@@ -583,6 +748,7 @@ function applyEvent() {
     state.aiBlocked = true;
     state.aiAnswered = true;
     setTimeout(function(){ showAIBubble(getDialogue('blocked'), 3000); }, 300);
+    setAIEmotion('blocked');
     document.getElementById('ai-thinking').style.display = 'none';
     var aiAns = document.getElementById('ai-answer');
     aiAns.textContent = '🚫 Bị chặn';
@@ -716,22 +882,9 @@ function grantRandomPowerup(reason) {
 }
 
 function checkRewards(playerCorrect) {
+  // Power-up system tạm ẩn
   state._playerWasFaster = false;
   state._predictEventCorrect = false;
-
-  // Cập nhật streak
-  if (playerCorrect) {
-    state.consecutiveCorrect++;
-  } else {
-    state.consecutiveCorrect = 0;
-  }
-
-  // Kiểm tra từng trigger
-  REWARD_TRIGGERS.forEach(function(trigger) {
-    if (trigger.check()) {
-      grantRandomPowerup(trigger.reason);
-    }
-  });
 }
 
 function renderPowerupBar() {
@@ -844,11 +997,12 @@ function aiMakeDecision() {
 
   document.getElementById('ai-thinking').style.display = 'none';
   var aiAns = document.getElementById('ai-answer');
-  aiAns.textContent = (isCorrect ? '✅ ' : '❌ ') + aiResult;
+  aiAns.textContent = isCorrect ? '✅' : '❌';
   aiAns.className = 'answer-badge ' + (isCorrect ? 'correct' : 'wrong');
 
   var dlgType = isCorrect ? (state.phase === 'boss' ? 'fast' : 'correct') : 'wrong';
   showAIBubble(getDialogue(dlgType));
+  setAIEmotion(isCorrect ? 'happy' : 'wrong');
 
   state.aiAnswered = true;
 
@@ -884,10 +1038,10 @@ function aiMakeDecision() {
 // PLAYER CHOOSE (normal/boss mode)
 // ============================================================
 function playerChoose(idx) {
-  if (state.mode === 'predict') return; // predict mode không dùng choice buttons
+  if (state.mode === 'predict') return;
   if (!state.roundActive || state.playerAnswered) return;
   state.playerAnswered = true;
-  clearInterval(state.timerInterval);
+  // KHÔNG dừng timer - để tiếp tục chạy cho đến khi AI trả lời
   disableChoices();
 
   var choices = state.question.shuffledChoices;
@@ -902,22 +1056,22 @@ function playerChoose(idx) {
 
   document.getElementById('player-status').style.display = 'none';
   var plAns = document.getElementById('player-answer');
-  plAns.textContent = (isCorrect ? '✅ ' : '❌ ') + chosen;
+  plAns.textContent = isCorrect ? '✅' : '❌';
   plAns.className = 'answer-badge ' + (isCorrect ? 'correct' : 'wrong');
 
   if (isCorrect) {
     if (!state.aiAnswered) {
       addScore('player');
       state._playerWasFaster = true;
-      // Player nhanh hơn AI → AI than thở
       setTimeout(function(){ showAIBubble(getDialogue('playerFaster'), 3500); }, 300);
+      setTimeout(function(){ setAIEmotion('tired'); }, 300);
     } else {
       var aiCorrect = document.getElementById('ai-answer').classList.contains('correct');
       if (!aiCorrect) addScore('player');
     }
   }
 
-  state.roundActive = false;
+  // Không set roundActive = false ở đây - chờ AI trả lời xong mới kết thúc lượt
   endRound();
 }
 
@@ -1012,6 +1166,9 @@ function endRound() {
   var playerDone = state.playerAnswered || state.timeLeft <= 0;
   if (!state.aiAnswered || !playerDone) return;
 
+  // Dừng timer ngay khi kết thúc lượt
+  clearInterval(state.timerInterval);
+
   var aiCorrect = document.getElementById('ai-answer').classList.contains('correct');
   var playerCorrect = state.mode === 'predict'
     // predict mode: đúng khi đoán trúng đáp án AI chọn (không phải đáp án đúng của câu hỏi)
@@ -1021,12 +1178,19 @@ function endRound() {
 
   // Shield đã được xử lý trong aiMakeDecision
 
+  // Xác định ai nhanh hơn
+  var winner = 'none';
+  if (aiCorrect && playerCorrect) {
+    winner = state._playerWasFaster ? 'player' : 'ai';
+  } else if (aiCorrect) {
+    winner = 'ai';
+  } else if (playerCorrect) {
+    winner = 'player';
+  }
+
   state.history.push({
     name: state.question.name,
-    phase: state.phase,
-    event: (state.event && state.event.label) ? state.event.label : '',
-    aiCorrect: aiCorrect,
-    playerCorrect: playerCorrect
+    winner: winner
   });
 
   // Kiểm tra nhận power-up
@@ -1048,15 +1212,15 @@ function showResult() {
   showScreen('screen-result');
 
   var totalRounds = state.history.length;
-  var playerCorrectCount = state.history.filter(function(h){ return h.playerCorrect; }).length;
+  var playerWinCount = state.history.filter(function(h){ return h.winner === 'player'; }).length;
   var isPredictMode = state.mode === 'predict';
 
   // Tiêu đề và icon theo chế độ
   var icon, title;
   if (isPredictMode) {
-    if (playerCorrectCount === totalRounds)      { icon='🧠'; title='Bạn đọc được AI hoàn toàn!'; }
-    else if (playerCorrectCount >= totalRounds * 0.6) { icon='😎'; title='Bạn hiểu AI khá tốt!'; }
-    else                                          { icon='�'; title='AI khó đoán thật nhỉ!'; }
+    if (playerWinCount === totalRounds)      { icon='🧠'; title='Bạn đọc được AI hoàn toàn!'; }
+    else if (playerWinCount >= totalRounds * 0.6) { icon='😎'; title='Bạn hiểu AI khá tốt!'; }
+    else                                          { icon='🤔'; title='AI khó đoán thật nhỉ!'; }
   } else {
     if (state.scorePlayer > state.scoreAI)      { icon='🏆'; title='Bạn thắng rồi!'; }
     else if (state.scoreAI > state.scorePlayer) { icon=state.phase==='boss'?'😈':'🤖'; title=state.phase==='boss'?'Boss AI thắng!':'AI thắng lần này!'; }
@@ -1088,19 +1252,19 @@ function showResult() {
     var div = document.createElement('div');
     div.className = 'history-item';
     if (isPredictMode) {
-      // Predict mode: chỉ hiện người chơi đoán đúng/sai ý AI
       div.innerHTML =
-        '<span style="color:#94a3b8;min-width:18px">' + (i+1) + '.</span>' +
+        '<span style="color:#7d5a3c;min-width:22px;font-weight:700">' + (i+1) + '.</span>' +
         '<span class="hi-obj">' + h.name + '</span>' +
-        '<span>' + (h.playerCorrect ? '✅ Đoán đúng' : '❌ Đoán sai') + '</span>';
+        '<span>' + (h.winner === 'player' ? '✅ Đoán đúng' : '❌ Đoán sai') + '</span>';
     } else {
+      var badge = '';
+      if (h.winner === 'ai')     badge = '<span class="hi-winner ai-win">AI nhanh hơn</span>';
+      else if (h.winner === 'player') badge = '<span class="hi-winner player-win"> Bạn nhanh hơn</span>';
+      else                            badge = '<span class="hi-winner none-win"> Không ai đúng</span>';
       div.innerHTML =
-        '<span style="color:#94a3b8;min-width:18px">' + (i+1) + '.</span>' +
+        '<span style="color:#7d5a3c;min-width:22px;font-weight:700">' + (i+1) + '.</span>' +
         '<span class="hi-obj">' + h.name + '</span>' +
-        '<span class="hi-phase ' + h.phase + '">' + (h.phase==='boss'?'🔥':'📝') + '</span>' +
-        '<span>' + (h.aiCorrect?'🤖✅':'🤖❌') + '</span>' +
-        '<span>' + (h.playerCorrect?'👤✅':'👤❌') + '</span>' +
-        (h.event ? '<span class="hi-event">' + h.event + '</span>' : '');
+        badge;
     }
     hist.appendChild(div);
   });
