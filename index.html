@@ -13,31 +13,88 @@
   <div id="laptop-screen">
     <div id="laptop-inner">
 
-      <!-- ===== INTRO ===== -->
-      <div id="screen-intro" class="screen active">
+      <!-- ===== WELCOME ===== -->
+      <div id="screen-welcome" class="screen active">
+        <!-- Doodle nền -->
+        <div class="doodle-animal cat">🐱</div>
+        <div class="doodle-animal bird">🐦</div>
+        <div class="doodle-animal bunny">🐰</div>
+        <div class="doodle-animal star1">⭐</div>
+        <div class="doodle-animal star2">✨</div>
+        <div class="doodle-animal star3">🌟</div>
+        <div class="doodle-animal star4">💫</div>
+
+        <div class="welcome-layout">
+          <!-- Trái: Robot slideshow -->
+          <div class="welcome-left">
+            <div class="robot-stage">
+              <div class="robot-glow"></div>
+              <img id="welcome-robot-img"
+                src="cam_xuc_robot/vui_vẻ_01-removebg-preview.png"
+                alt="Robot" class="welcome-robot-img"/>
+            </div>
+          </div>
+
+          <!-- Phải: Nội dung -->
+          <div class="welcome-right">
+            <h1 class="welcome-title">
+              <span class="wt-line1">NHÀ DỰ ĐOÁN</span>
+              <span class="wt-line2">THÔNG THÁI</span>
+            </h1>
+            <p class="welcome-caption">
+              Bạn có đủ thông minh để <strong>đoán trước cả AI</strong> không?<br/>
+              Hãy thử thách bản thân ngay!
+            </p>
+            <button class="btn-start" onclick="showScreen('screen-intro')">
+              🚀 Bắt đầu thôi!
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== INTRO - CHỌN CHẾ ĐỘ ===== -->
+      <div id="screen-intro" class="screen">
+        <!-- Doodle nền -->
+        <div class="intro-doodle d1">🌈</div>
+        <div class="intro-doodle d2">⭐</div>
+        <div class="intro-doodle d3">🎯</div>
+        <div class="intro-doodle d4">🏆</div>
+        <div class="intro-doodle d5">💡</div>
+        <div class="intro-doodle d6">🎮</div>
+        <div class="intro-doodle d7">✨</div>
+        <div class="intro-doodle d8">🌟</div>
+
         <div class="intro-box">
-          <h1>NHÀ DỰ ĐOÁN THÔNG THÁI</h1>
-          <p class="intro-desc">Chọn chế độ chơi của bạn!</p>
+          <div class="intro-title-wrap">
+            <span class="intro-emoji-l"></span>
+            <h2 class="intro-heading">Chọn chế độ chơi!</h2>
+            <span class="intro-emoji-r"></span>
+          </div>
+          <p class="intro-sub">Bạn muốn thử sức ở mức nào? </p>
+
           <div class="mode-grid">
             <button class="mode-btn easy-btn" onclick="selectMode('easy')">
-              <img src="cap_độ_robot/dễ.jpg" class="mode-robot-img" alt="Dễ"/>
-              <span class="mode-name">Dễ</span>
+              <img src="cap_độ_robot/dễ.png" class="mode-robot-img" alt="Dễ"/>
+              <span class="mode-name"> Dễ</span>
+              <span class="mode-desc">Thư giãn · AI chậm · 40s</span>
             </button>
             <button class="mode-btn medium-btn" onclick="selectMode('medium')">
-              <img src="cap_độ_robot/trung bình.jpg" class="mode-robot-img" alt="Trung Bình"/>
-              <span class="mode-name">Trung Bình</span>
+              <img src="cap_độ_robot/trung bình.png" class="mode-robot-img" alt="Trung Bình"/>
+              <span class="mode-name"> Trung Bình</span>
+              <span class="mode-desc">Vừa sức · AI vừa · 30s</span>
             </button>
             <button class="mode-btn hard-btn" onclick="selectMode('hard')">
-              <img src="cap_độ_robot/khó.jpg" class="mode-robot-img" alt="Khó"/>
-              <span class="mode-name">Khó</span>
+              <img src="cap_độ_robot/khó.png" class="mode-robot-img" alt="Khó"/>
+              <span class="mode-name"> Khó</span>
+              <span class="mode-desc">Thử thách · AI nhanh · 20s</span>
             </button>
             <button class="mode-btn predict-btn" onclick="selectMode('predict')" style="display:none">
               <span class="mode-icon">🧠</span>
               <span class="mode-name">Đoán Ý AI</span>
-              <span class="mode-desc">Đoán AI sẽ chọn đáp án nào</span>
-              <span class="mode-levels">5 câu · Không Boss</span>
             </button>
           </div>
+
+          <p class="intro-footer">5 câu hỏi · Ai nhanh hơn thắng! 🏆</p>
         </div>
       </div>
 
@@ -125,6 +182,56 @@
             <div class="panel-label">Bạn</div>
             <div id="player-status" class="thinking-box">Đang chờ...</div>
             <div id="player-answer" class="answer-badge hidden"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== HƯỚNG DẪN ===== -->
+      <div id="screen-howto" class="screen">
+        <div class="intro-doodle d1">🎯</div>
+        <div class="intro-doodle d2">⭐</div>
+        <div class="intro-doodle d3">💡</div>
+        <div class="intro-doodle d4">🏆</div>
+        <div class="intro-doodle d5">🤖</div>
+        <div class="intro-doodle d6">✨</div>
+
+        <div class="howto-box">
+          <div class="howto-header">
+            <span class="howto-emoji"></span>
+            <h2 class="howto-title">Cách chơi</h2>
+            <span class="howto-emoji"></span>
+          </div>
+
+          <div class="howto-steps">
+            <div class="howto-step">
+              <div class="step-icon"></div>
+              <div class="step-text">Đọc từng <strong>gợi ý</strong> xuất hiện dần dần</div>
+            </div>
+            <div class="howto-step">
+              <div class="step-icon"></div>
+              <div class="step-text">Đoán xem đó là <strong>đồ vật gì</strong>?</div>
+            </div>
+            <div class="howto-step">
+              <div class="step-icon"></div>
+              <div class="step-text">Bấm vào <strong>đáp án đúng</strong> trước khi AI!</div>
+            </div>
+            <div class="howto-step">
+              <div class="step-icon"></div>
+              <div class="step-text">Trả lời <strong>càng sớm</strong> được <strong>càng nhiều điểm</strong>!</div>
+            </div>
+          </div>
+
+          <div class="howto-score-info">
+            <span class="score-chip s100">Gợi ý 1 = 100 điểm</span>
+            <span class="score-chip s90">Gợi ý 2 = 90 điểm</span>
+            <span class="score-chip s80">Gợi ý 3 = 80 điểm</span>
+          </div>
+
+          <p class="howto-quote">"Bạn có thể đánh bại AI không?  Hãy chứng minh nào!"</p>
+
+          <div class="howto-actions">
+            <button class="btn-start" onclick="goToGender()">🚀 Tôi sẵn sàng!</button>
+            <div id="howto-countdown" class="howto-auto">Tự động bắt đầu sau <span id="howto-sec">6</span>s</div>
           </div>
         </div>
       </div>
