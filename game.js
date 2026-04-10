@@ -422,10 +422,16 @@ function selectGender(gender) {
 
   showScreen('screen-countdown');
   document.body.classList.add('on-countdown');
+  // Tạm dừng BGM trong countdown
+  var bgm = document.getElementById('bgm');
+  if (bgm) bgm.pause();
   startCountdown();
 }
 
 function startCountdown() {
+  // Tắt BGM trong countdown
+  var bgm = document.getElementById('bgm');
+  if (bgm) bgm.pause();
   var num = 3;
   var numEl = document.getElementById('cd-number');
   var readyEl = document.getElementById('cd-ready');
@@ -436,6 +442,7 @@ function startCountdown() {
       numEl.style.animation = 'none';
       void numEl.offsetWidth;
       numEl.style.animation = 'cdPulse .8s ease-in-out';
+      playCountdownBeep(false);
       num--;
       setTimeout(tick, 1000);
     } else {
@@ -444,9 +451,13 @@ function startCountdown() {
       numEl.style.animation = 'none';
       void numEl.offsetWidth;
       numEl.style.animation = 'cdPulse .6s ease-in-out';
+      playCountdownBeep(true);
       setTimeout(function(){
         showScreen('screen-game');
         document.body.classList.remove('on-countdown');
+        // Resume BGM
+        var bgm = document.getElementById('bgm');
+        if (bgm && !_muted) bgm.play().catch(function(){});
         nextRound();
       }, 700);
     }
@@ -1257,6 +1268,11 @@ function endRound() {
 function showResult() {
   clearInterval(state.timerInterval);
   document.body.classList.remove('boss-mode');
+  playVictoryAndResumeBGM();
+  // Pause BGM, phát nhạc chiến thắng rồi resume
+  var bgm = document.getElementById('bgm');
+  if (bgm) bgm.pause();
+  playVictoryAndResumeBGM();
   showScreen('screen-result');
 
   var totalRounds = state.history.length;
@@ -1416,3 +1432,113 @@ showScreen = function(id) {
   }
   _origShowScreen(id);
 };
+
+// ============================================================
+// AUDIO - Nhạc nền + countdown + chiến thắng
+// ============================================================
+var _muted = false;
+var _audioCtx = null;
+
+function getAudioCtx() {
+  if (!_audioCtx) {
+    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return _audioCtx;
+}
+
+function initAudio() {
+  var bgm = document.getElementById('bgm');
+  if (!bgm) return;
+  bgm.volume = 0.35;
+  document.addEventListener('click', function startBGM() {
+    if (!_muted) bgm.play().catch(function(){});
+    document.removeEventListener('click', startBGM);
+  }, { once: true });
+}
+
+function toggleMute() {
+  _muted = !_muted;
+  var bgm = document.getElementById('bgm');
+  var btn = document.getElementById('btn-mute');
+  if (_muted) {
+    if (bgm) bgm.pause();
+    if (btn) { btn.textContent = '🔇'; btn.classList.add('muted'); }
+  } else {
+    if (bgm) bgm.play().catch(function(){});
+    if (btn) { btn.textContent = '🔊'; btn.classList.remove('muted'); }
+  }
+}
+
+// Digital deep countdown: tiếng "bíp" điện tử sâu
+function playCountdownBeep(isFinal) {
+  if (_muted) return;
+  try {
+    var ctx = getAudioCtx();
+    var t = ctx.currentTime;
+
+    if (isFinal) {
+      // "BẮT ĐẦU" - chord thắng lợi ngắn
+      [523, 659, 784].forEach(function(freq, i) {
+        var osc = ctx.createOscillator();
+        var g = ctx.createGain();
+        osc.connect(g); g.connect(ctx.destination);
+        osc.type = 'square';
+        osc.frequency.value = freq;
+        g.gain.setValueAtTime(.15, t + i * 0.08);
+        g.gain.exponentialRampToValueAtTime(.001, t + i * 0.08 + 0.4);
+        osc.start(t + i * 0.08);
+        osc.stop(t + i * 0.08 + 0.4);
+      });
+    } else {
+      // Số đếm - digital deep: sóng vuông tần thấp
+      var osc = ctx.createOscillator();
+      var g = ctx.createGain();
+      // Distortion nhẹ
+      var dist = ctx.createWaveShaper();
+      var curve = new Float32Array(256);
+      for (var i = 0; i < 256; i++) {
+        var x = (i * 2) / 256 - 1;
+        curve[i] = (Math.PI + 200) * x / (Math.PI + 200 * Math.abs(x));
+      }
+      dist.curve = curve;
+      osc.connect(dist); dist.connect(g); g.connect(ctx.destination);
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(180, t);
+      osc.frequency.exponentialRampToValueAtTime(120, t + 0.15);
+      g.gain.setValueAtTime(.3, t);
+      g.gain.exponentialRampToValueAtTime(.001, t + 0.2);
+      osc.start(t);
+      osc.stop(t + 0.2);
+    }
+  } catch(e) {}
+}
+
+// Nhạc chiến thắng ~3s rồi resume BGM
+function playVictoryAndResumeBGM() {
+  if (_muted) return;
+  try {
+    var ctx = getAudioCtx();
+    var t = ctx.currentTime;
+    // Melody chiến thắng đơn giản
+    var notes = [523,523,523,523,415,466,523,466,523];
+    var times = [0,.15,.3,.45,.6,.75,.9,1.1,1.3];
+    notes.forEach(function(freq, i) {
+      var osc = ctx.createOscillator();
+      var g = ctx.createGain();
+      osc.connect(g); g.connect(ctx.destination);
+      osc.type = 'triangle';
+      osc.frequency.value = freq;
+      g.gain.setValueAtTime(.25, t + times[i]);
+      g.gain.exponentialRampToValueAtTime(.001, t + times[i] + 0.25);
+      osc.start(t + times[i]);
+      osc.stop(t + times[i] + 0.3);
+    });
+    // Resume BGM sau 3s
+    setTimeout(function(){
+      var bgm = document.getElementById('bgm');
+      if (bgm && !_muted) bgm.play().catch(function(){});
+    }, 3000);
+  } catch(e) {}
+}
+
+window.addEventListener('load', initAudio);
